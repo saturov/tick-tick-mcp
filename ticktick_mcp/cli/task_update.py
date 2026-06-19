@@ -12,8 +12,8 @@ import time
 from datetime import datetime
 from typing import Any
 
-from ticktick_mcp.cli.api import _is_open_task, _task_raw, fetch_all_tasks
-from ticktick_mcp.cli.client import ensure_venv_active, _make_retry_session
+from ticktick_mcp.api import _is_open_task, _task_raw, fetch_all_tasks
+from ticktick_mcp.client import ensure_venv_active, _make_retry_session
 
 
 _SKIP_KEYS = {"projectName", "etag", "modifiedTime"}

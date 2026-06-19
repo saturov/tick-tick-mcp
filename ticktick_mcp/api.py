@@ -9,7 +9,7 @@ import sys
 from datetime import datetime, timezone
 from typing import Any
 
-from ticktick_mcp.cli.client import (
+from ticktick_mcp.client import (
     TickTickClient,
     build_client,
     ensure_venv_active,

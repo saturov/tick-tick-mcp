@@ -8,13 +8,13 @@ import sys
 from datetime import date, datetime, timezone
 from typing import Any
 
-from ticktick_mcp.cli.api import (
+from ticktick_mcp.api import (
     _normalize_iso_datetime,
     _write_output,
     list_projects,
     resolve_project_ids,
 )
-from ticktick_mcp.cli.client import TickTickClient, build_client, ensure_venv_active
+from ticktick_mcp.client import TickTickClient, build_client, ensure_venv_active
 
 
 def _parse_completed_time(value: Any) -> datetime | None:

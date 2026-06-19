@@ -2,13 +2,13 @@ from __future__ import annotations
 
 from typing import Optional
 
-from ticktick_mcp.cli.client import (
+from ticktick_mcp.client import (
     TickTickClient,
     build_client,
     _make_retry_session,
     _session_headers,
 )
-from ticktick_mcp.cli.api import list_projects as _cli_list_projects
+from ticktick_mcp.api import list_projects as _cli_list_projects
 
 from config import get_api_key, get_web_credentials
 

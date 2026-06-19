@@ -7,7 +7,7 @@ Re-exports the facade modules so consumers can do
 from __future__ import annotations
 
 # --- Low-level client (auth, retry, sessions) ---
-from ticktick_mcp.cli.client import (  # noqa: F401
+from ticktick_mcp.client import (  # noqa: F401
     TickTickClient,
     build_client,
     _make_retry_session,
@@ -15,7 +15,7 @@ from ticktick_mcp.cli.client import (  # noqa: F401
 )
 
 # --- Mid-level API (list/fetch/resolve) ---
-from ticktick_mcp.cli.api import (  # noqa: F401
+from ticktick_mcp.api import (  # noqa: F401
     fetch_all_tasks,
     list_projects,
     resolve_project_ids,

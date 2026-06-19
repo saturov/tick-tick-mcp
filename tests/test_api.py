@@ -1,4 +1,4 @@
-"""Tests for ticktick_mcp.cli.api — focused on ISO timestamp normalization."""
+"""Tests for ticktick_mcp.api — focused on ISO timestamp normalization."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ import pytest
 MCP_DIR = str(Path(__file__).resolve().parents[1])
 sys.path.insert(0, MCP_DIR)
 
-from ticktick_mcp.cli.api import (
+from ticktick_mcp.api import (
     _normalize_iso_datetime,
     _normalize_task_dates,
     fetch_all_tasks,
@@ -95,7 +95,7 @@ class TestFetchAllTasksNormalizesDates:
         # `_make_retry_session()` is called inside fetch_all_tasks; the
         # project data is fetched via `open_api_get_json`. Mock that helper
         # to return one project containing one task with the broken date.
-        from ticktick_mcp.cli import api as api_mod
+        from ticktick_mcp import api as api_mod
 
         def fake_open_api_get_json(*, session, url, api_key):
             assert "/project/p1/data" in url
