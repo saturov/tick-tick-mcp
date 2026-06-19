@@ -127,3 +127,42 @@ class TestFetchAllTasksNormalizesDates:
         assert raw["startDate"] == "2026-06-14T21:00:00.000+00:00"
         # ...and a real `fromisoformat` call now succeeds.
         datetime.fromisoformat(raw["dueDate"])
+
+
+# ---------------------------------------------------------------------------
+# unwrap_task — public helper for the {raw, meta} envelope convention
+# ---------------------------------------------------------------------------
+
+
+class TestUnwrapTask:
+    """unwrap_task(task) returns task["raw"] if task is a {raw, meta} envelope,
+    otherwise it returns task as-is."""
+
+    def test_unwrap_with_raw_meta_envelope(self):
+        """A task wrapped in {raw, meta} returns the raw content."""
+        from ticktick_mcp.api import unwrap_task
+
+        wrapped = {
+            "raw": {"id": "t1", "title": "Do thing", "status": 0},
+            "meta": {"fetched_at": "2026-06-19T12:00:00+00:00", "source": "ticktick-open-api"},
+        }
+        result = unwrap_task(wrapped)
+        assert result == {"id": "t1", "title": "Do thing", "status": 0}
+        assert "meta" not in result
+
+    def test_unwrap_already_unwrapped(self):
+        """A dict without a 'raw' key is returned unchanged."""
+        from ticktick_mcp.api import unwrap_task
+
+        plain = {"id": "t2", "title": "Plain task"}
+        result = unwrap_task(plain)
+        assert result is plain
+
+    def test_unwrap_empty(self):
+        """An empty dict is returned unchanged (no crash)."""
+        from ticktick_mcp.api import unwrap_task
+
+        empty = {}
+        result = unwrap_task(empty)
+        assert result == {}
+        assert result is empty

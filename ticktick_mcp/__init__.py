@@ -20,6 +20,7 @@ from ticktick_mcp.api import (  # noqa: F401
     list_projects,
     resolve_project_ids,
     resolve_selectors,
+    unwrap_task,
 )
 
 # --- Write paths (create/update with verification) ---

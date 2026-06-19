@@ -429,3 +429,16 @@ def _write_output(data: list[dict[str, Any]], output_path: str | None) -> None:
     else:
         sys.stdout.write(payload)
         sys.stdout.write("\n")
+
+
+def unwrap_task(task: dict) -> dict:
+    """Return ``task["raw"]`` if ``task`` is a ``{raw, meta}`` envelope,
+    otherwise return ``task`` unchanged.
+
+    This is the public counterpart of the private ``_task_raw`` helper.
+    Callers that receive a wrapped task from ``fetch_all_tasks`` should use
+    this function to extract the underlying TickTick task dict.
+    """
+    if isinstance(task, dict) and "raw" in task:
+        return task["raw"]
+    return task
