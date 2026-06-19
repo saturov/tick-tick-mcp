@@ -8,15 +8,21 @@ import sys
 from datetime import date, datetime, timezone
 from typing import Any
 
-from ticktick_mcp.cli.api import _write_output, list_projects, resolve_project_ids
+from ticktick_mcp.cli.api import (
+    _normalize_iso_datetime,
+    _write_output,
+    list_projects,
+    resolve_project_ids,
+)
 from ticktick_mcp.cli.client import TickTickClient, build_client, ensure_venv_active
 
 
 def _parse_completed_time(value: Any) -> datetime | None:
     if not isinstance(value, str):
         return None
+    normalized = _normalize_iso_datetime(value)
     try:
-        return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.000+0000")
+        return datetime.fromisoformat(normalized)
     except ValueError:
         return None
 

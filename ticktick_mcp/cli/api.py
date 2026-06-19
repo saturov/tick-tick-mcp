@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 from datetime import datetime, timezone
 from typing import Any
@@ -20,6 +21,55 @@ from ticktick_mcp.cli.client import (
 # ---------------------------------------------------------------------------
 # Task helpers
 # ---------------------------------------------------------------------------
+
+# ISO date-time fields that TickTick returns as e.g. "2026-06-14T21:00:00.000+0000"
+# — note the missing colon in the timezone offset. `datetime.fromisoformat()`
+# rejects this on Python <3.11, so we normalize once at the boundary.
+_ISO_DATETIME_FIELDS = ("dueDate", "startDate", "completedTime", "modifiedTime", "createdTime")
+_ISO_OFFSET_RE = re.compile(r"([+-]\d{2})(\d{2})$")
+
+
+def _normalize_iso_datetime(value: Any) -> Any:
+    """Return ``value`` with a ticktick-style ISO timestamp rewritten to a
+    form that ``datetime.fromisoformat()`` accepts on Python 3.9+.
+
+    Non-string values, already-valid ISO strings, and bare ``YYYY-MM-DD``
+    dates are returned unchanged.
+    """
+    if not isinstance(value, str) or not value:
+        return value
+    # Bare date — no time component, nothing to fix.
+    if "T" not in value:
+        return value
+    # `Z` is accepted on 3.11+ but rejected on 3.9/3.10 — replace up front.
+    candidate = value.replace("Z", "+00:00")
+    # `+0000` (no colon) is rejected on every supported version. Try parsing
+    # first; only reformat if needed so we don't mutate valid strings.
+    try:
+        datetime.fromisoformat(candidate)
+        return value
+    except ValueError:
+        pass
+    fixed = _ISO_OFFSET_RE.sub(r"\1:\2", candidate)
+    try:
+        datetime.fromisoformat(fixed)
+    except ValueError:
+        # Leave the original string alone if we still can't parse it —
+        # better to surface the raw value than to silently corrupt it.
+        return value
+    return fixed
+
+
+def _normalize_task_dates(task: Any) -> None:
+    """In-place: rewrite known ISO date-time fields on a task dict so that
+    downstream code can pass them straight to ``datetime.fromisoformat()``.
+    """
+    if not isinstance(task, dict):
+        return
+    for field in _ISO_DATETIME_FIELDS:
+        if field in task:
+            task[field] = _normalize_iso_datetime(task[field])
+
 
 def _task_raw(task: Any) -> Any:
     if isinstance(task, dict):
@@ -334,6 +384,11 @@ def fetch_all_tasks(
     results: list[dict[str, Any]] = []
     for task in raw_tasks:
         raw = _task_raw(task)
+        # TickTick returns ISO timestamps as "2026-06-14T21:00:00.000+0000"
+        # (missing colon in the offset), which `datetime.fromisoformat()`
+        # rejects on Python <3.11. Rewrite once at the boundary so callers
+        # can parse dates without per-call workarounds.
+        _normalize_task_dates(raw)
 
         # Post-filter for client path (API path already pre-filtered by project)
         if api_key is None and selected_project_ids is not None:
