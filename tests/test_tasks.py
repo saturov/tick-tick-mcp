@@ -174,8 +174,8 @@ class TestUncompleteTask:
             with patch.object(tasks_mod, "fetch_all_tasks", return_value=[
                 {"raw": {"id": "t1", "status": 2}, "meta": {}}
             ]):
-                with patch("ticktick_mcp.cli.task_update._send_task_update", return_value={"id": "t1"}):
-                    with patch("ticktick_mcp.cli.task_update._make_retry_session", return_value=MagicMock()):
+                with patch("ticktick_mcp.task_update._send_task_update", return_value={"id": "t1"}):
+                    with patch("ticktick_mcp.task_update._make_retry_session", return_value=MagicMock()):
                         result = tasks_mod.handle_uncomplete_task(task_id="t1", project_id="Work")
                         assert result["task"]["id"] == "t1"
 

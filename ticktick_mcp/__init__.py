@@ -24,13 +24,13 @@ from ticktick_mcp.api import (  # noqa: F401
 )
 
 # --- Write paths (create/update with verification) ---
-from ticktick_mcp.cli.task_update import (  # noqa: F401
+from ticktick_mcp.task_update import (  # noqa: F401
     create_task,
     update_task,
 )
 
 # --- Completed tasks (Web API only) ---
-from ticktick_mcp.cli.tasks_completed import (  # noqa: F401
+from ticktick_mcp.tasks_completed import (  # noqa: F401
     get_completed_tasks_for_date,
     get_completed_tasks_range,
 )
