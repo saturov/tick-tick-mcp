@@ -9,7 +9,19 @@ dependencies = [
 
 [project.scripts]
 ticktick-mcp = "server:main"
+ticktick-projects = "ticktick_mcp.skill_cli:projects"
+ticktick-tasks-open = "ticktick_mcp.skill_cli:tasks_open"
+ticktick-tasks-undated = "ticktick_mcp.skill_cli:tasks_undated"
+ticktick-tasks-completed = "ticktick_mcp.skill_cli:tasks_completed"
+ticktick-task-update = "ticktick_mcp.skill_cli:task_update"
+ticktick-plan = "ticktick_mcp.skill_cli:plan"
 
 [build-system]
 requires = ["setuptools>=68.0"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["config", "server", "session"]
+
+[tool.setuptools.packages.find]
+include = ["ticktick_mcp", "ticktick_mcp.*", "handlers", "handlers.*"]

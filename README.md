@@ -2,6 +2,10 @@
 
 MCP (Model Context Protocol) server for [TickTick](https://ticktick.com). Exposes full CRUD for tasks, projects, and tags to MCP-compatible AI clients (e.g., Claude Desktop).
 
+## Bundled Skill
+
+This repo also contains `skills/ticktick-skill`. Keep TickTick protocol and CRUD behavior in `ticktick_mcp`; workflow-specific filtering, CLI formatting, and planning belong in the bundled skill.
+
 ## Features
 
 **Tasks**
@@ -67,6 +71,17 @@ ticktick-mcp
 ```
 
 The server communicates over `stdio` using JSON-RPC 2.0 (MCP protocol).
+
+The bundled skill also exposes CLI workflow commands when the package is installed:
+
+```bash
+ticktick-projects
+ticktick-tasks-open
+ticktick-tasks-undated
+ticktick-tasks-completed
+ticktick-task-update
+ticktick-plan
+```
 
 ## Claude Desktop Integration
 
