@@ -12,7 +12,7 @@ import time
 from datetime import datetime
 from typing import Any
 
-from ticktick_mcp.cli.api import _task_raw
+from ticktick_mcp.cli.api import _is_open_task, _task_raw, fetch_all_tasks
 from ticktick_mcp.cli.client import ensure_venv_active, _make_retry_session
 
 
@@ -155,9 +155,7 @@ def get_task_by_id(task_id: str) -> dict[str, Any]:
     if not api_key:
         raise RuntimeError("TICKTICK_API_KEY is required for task updates")
 
-    from ticktick_cli.tasks_open import get_open_tasks
-
-    tasks = get_open_tasks()
+    tasks = [t for t in fetch_all_tasks() if _is_open_task(_task_raw(t))]
     for task in tasks:
         raw = _task_raw(task)
         if raw.get("id") == task_id:
