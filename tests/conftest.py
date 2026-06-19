@@ -7,16 +7,6 @@ import sys
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
-SCRIPTS_DIR = str(
-    Path(__file__).resolve().parents[2]
-    / "skills"
-    / "tick-tick-skill"
-    / "skills"
-    / "ticktick-skill"
-    / "scripts"
-)
-sys.path.insert(0, SCRIPTS_DIR)
-
 MCP_DIR = str(Path(__file__).resolve().parents[1])
 sys.path.insert(0, MCP_DIR)
 
