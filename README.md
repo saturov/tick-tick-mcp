@@ -28,33 +28,25 @@ MCP (Model Context Protocol) server for [TickTick](https://ticktick.com). Expose
 
 - Python 3.9+
 - A [TickTick](https://ticktick.com) account
-- The [`ticktick-skill`](../tick-tick-skill) sibling package (provides the `ticktick_cli` library)
 
 ## Setup
 
-1. Clone this repo alongside the `tick-tick-skill` package:
+This repo is self-contained — no sibling package needed.
 
-```
-Projects/
-  tick-tick-mcp/        # this repo
-  skills/
-    tick-tick-skill/    # sibling dependency
-```
-
-2. Create and activate a virtual environment:
+1. Create and activate a virtual environment:
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
 ```
 
-3. Install dependencies:
+2. Install the package:
 
 ```bash
 pip install -e .
 ```
 
-4. Set environment variables (or put them in your shell profile):
+3. Set environment variables (or put them in your shell profile):
 
 ```bash
 export TICKTICK_API_KEY="your_open_api_bearer_token"
