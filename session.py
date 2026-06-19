@@ -1,20 +1,15 @@
-import os
-import sys
-from pathlib import Path
+from __future__ import annotations
+
 from typing import Optional
 
-_SCRIPTS_DIR = str(
-    Path(__file__).resolve().parents[1]
-    / "skills"
-    / "tick-tick-skill"
-    / "skills"
-    / "ticktick-skill"
-    / "scripts"
+from ticktick_mcp.cli.client import (
+    TickTickClient,
+    build_client,
+    _make_retry_session,
+    _session_headers,
 )
-sys.path.insert(0, _SCRIPTS_DIR)
+from ticktick_mcp.cli.api import list_projects as _cli_list_projects
 
-from ticktick_cli.client import TickTickClient, build_client, _make_retry_session, _session_headers
-from ticktick_cli.api import list_projects as _cli_list_projects
 from config import get_api_key, get_web_credentials
 
 

@@ -4,10 +4,10 @@ from datetime import date as date_type
 from typing import Any
 
 from session import get_session, TickTickMCPSession
-from ticktick_cli.task_update import create_task as _cli_create_task, update_task as _cli_update_task, _parse_date
-from ticktick_cli.tasks_completed import get_completed_tasks_for_date, get_completed_tasks_range
-from ticktick_cli.api import fetch_all_tasks
-from ticktick_cli.client import TickTickClient
+from ticktick_mcp.cli.task_update import create_task as _cli_create_task, update_task as _cli_update_task, _parse_date
+from ticktick_mcp.cli.tasks_completed import get_completed_tasks_for_date, get_completed_tasks_range
+from ticktick_mcp.cli.api import fetch_all_tasks
+from ticktick_mcp.cli.client import TickTickClient
 
 
 def _format_task(task: dict[str, Any]) -> dict[str, Any]:
@@ -100,8 +100,8 @@ def handle_complete_task(task_id: str, project_id: str) -> dict[str, Any]:
 def handle_uncomplete_task(task_id: str, project_id: str) -> dict[str, Any]:
     session = get_session()
     _ = session.api_key
-    from ticktick_cli.task_update import _send_task_update
-    from ticktick_cli.client import _make_retry_session
+    from ticktick_mcp.cli.task_update import _send_task_update
+    from ticktick_mcp.cli.client import _make_retry_session
     resolved_pid = session.resolve_project_id(project_id)
     api_key = session.api_key
     tasks = fetch_all_tasks(selected_project_ids={resolved_pid})
