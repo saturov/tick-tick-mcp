@@ -10,20 +10,20 @@ import json
 import sys
 from typing import Any
 
-from tools.tasks import (
+from handlers.tasks import (
     handle_get_tasks, handle_get_task, handle_create_task,
     handle_update_task, handle_complete_task, handle_uncomplete_task,
     handle_delete_task, handle_delete_tasks, handle_move_task,
     handle_get_completed_tasks, handle_get_completed_tasks_range,
     handle_make_subtask, handle_remove_subtask,
 )
-from tools.projects import (
+from handlers.projects import (
     handle_list_projects, handle_get_project, handle_create_project,
     handle_update_project, handle_archive_project, handle_unarchive_project,
     handle_delete_project, handle_create_project_folder,
     handle_delete_project_folder,
 )
-from tools.tags import (
+from handlers.tags import (
     handle_list_tags, handle_create_tag, handle_update_tag,
     handle_delete_tag, handle_merge_tags, handle_batch_create_tags,
 )

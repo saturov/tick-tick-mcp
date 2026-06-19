@@ -36,8 +36,7 @@ from ticktick_mcp.tasks_completed import (  # noqa: F401
 )
 
 # --- MCP-style handlers are NOT re-exported here ---
-# They are imported directly by server.py (currently from tools.X,
-# after Task 1.5: from ticktick_mcp.handlers.X).  Re-exporting them
-# here creates a circular import:
-#   server.py -> tools.tasks -> session.py -> ticktick_mcp.client ->
-#   ticktick_mcp.__init__ -> tools.tasks (still loading)
+# They are imported directly by server.py (from handlers.X).
+# Re-exporting them here creates a circular import:
+#   server.py -> handlers.tasks -> session.py -> ticktick_mcp.client ->
+#   ticktick_mcp.__init__ -> handlers.tasks (still loading)

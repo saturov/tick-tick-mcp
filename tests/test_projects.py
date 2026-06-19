@@ -1,4 +1,4 @@
-"""Tests for tools/projects.py handlers."""
+"""Tests for handlers/projects.py handlers."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from unittest.mock import patch, MagicMock
 MCP_DIR = str(Path(__file__).resolve().parents[1])
 sys.path.insert(0, MCP_DIR)
 
-import tools.projects as proj_mod
+import handlers.projects as proj_mod
 
 
 class TestListProjects:

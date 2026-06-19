@@ -1,4 +1,4 @@
-"""Tests for tools/tasks.py handlers."""
+"""Tests for handlers/tasks.py handlers."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ from unittest.mock import patch, MagicMock
 MCP_DIR = str(Path(__file__).resolve().parents[1])
 sys.path.insert(0, MCP_DIR)
 
-import tools.tasks as tasks_mod
+import handlers.tasks as tasks_mod
 from session import _session
 
 
