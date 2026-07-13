@@ -102,15 +102,21 @@ class TestUpdateTask:
 
 
 class TestCompleteTask:
-    def test_success(self):
+    def test_uses_open_api_update_path(self):
         s = MagicMock()
         s.resolve_project_id.return_value = "p1"
-        client = MagicMock()
-        client.complete_task.return_value = {"id": "t1", "completed": True}
-        s.get_web_client.return_value = client
         with patch.object(tasks_mod, "get_session", return_value=s):
-            result = tasks_mod.handle_complete_task(task_id="t1", project_id="Work")
-            assert result["task"]["completed"] is True
+            with patch.object(
+                tasks_mod,
+                "_cli_update_task",
+                return_value={"id": "t1", "completed": True},
+            ) as mock_update:
+                result = tasks_mod.handle_complete_task(task_id="t1", project_id="Work")
+
+        s.resolve_project_id.assert_called_once_with("Work")
+        s.get_web_client.assert_not_called()
+        mock_update.assert_called_once_with(task_id="t1", complete=True)
+        assert result["task"]["completed"] is True
 
 
 class TestDeleteTask:

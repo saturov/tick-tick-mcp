@@ -91,9 +91,8 @@ def handle_update_task(
 
 def handle_complete_task(task_id: str, project_id: str) -> dict[str, Any]:
     session = get_session()
-    client = session.get_web_client()
-    resolved_pid = session.resolve_project_id(project_id)
-    result = client.complete_task(task_id=task_id, project_id=resolved_pid)
+    session.resolve_project_id(project_id)
+    result = _cli_update_task(task_id=task_id, complete=True)
     return {"task": result}
 
 
